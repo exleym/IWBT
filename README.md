@@ -10,3 +10,9 @@ I Went Boating Today (IWBT) is a mobile solution to the information problems ari
 	<li>Mobile access to user-generated content
 </ol>
 I went boating today is designed as a mobile app with web and back-end support provided for various features.
+
+```python
+def test_function(input1, input2):
+    print input1 ** input2
+    return 0
+```
