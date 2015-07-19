@@ -10,7 +10,9 @@ import pandas as pd
 
 class DataReader(object):
 
-    def __init__(self, rivers, gauge_params=['00060'], ns=None):
+    def __init__(self, rivers, gauge_params=None, ns=None):
+        if gauge_params is None:
+            gauge_params = ['00060']
         self.rivers = rivers
         self.ns = ns
         self.gauges = dict()
@@ -53,7 +55,6 @@ class DataReader(object):
             for i in z[0][2][0]:
                 flow[i.tag.split("}")[1]] = i.text
             flow['time'] = pd.to_datetime(flow['time'])
-            flow['time'].tz_localize('UTC').tz_convert('US/Pacific')
             self.gauges[gauge] = flow
 
     def _set_default_ns(self):
