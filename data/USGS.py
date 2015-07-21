@@ -64,7 +64,9 @@ class DataReader(object):
 
 
 river_dict = {'chattooga_bridge': '02177000', 'chattooga_burrells': '02176930', 'gallatin': '06043500'}
-dr = DataReader(rivers=river_dict)
+
+# TODO: Handle multiple gauge_params
+dr = DataReader(rivers=river_dict, gauge_params=['00060', '00065'])
 print dr.get_flow(river_dict['chattooga_bridge'])
 
 
