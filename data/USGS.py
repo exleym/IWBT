@@ -63,18 +63,12 @@ class DataReader(object):
                    'om': 'http://www.opengis.net/om/2.0'}
 
 
-river_dict = {'chattooga_bridge': '02177000', 'chattooga_burrells': '02176930', 'gallatin': '06043500'}
-dr = DataReader(rivers=river_dict)
-print dr.get_flow(river_dict['chattooga_bridge'])
+if __name__ == '__main__':
+    river_dict = {'chattooga_bridge': '02177000', 'chattooga_burrells': '02176930', 'gallatin': '06043500'}
+    dr = DataReader(rivers=river_dict)
+    print dr.get_flow(river_dict['chattooga_bridge'])
+    print dr.get_flow(river_dict['chattooga_burrells'])
+    print dr.get_flow(river_dict['gallatin'])
 
 
-"""
-print gauges
-ch1 = gauges['02176930']['time']
-ch2 = gauges['02177000']['time']
-ga1 = gauges['06043500']['time']
 
-print pd.to_datetime(ch1)
-print pd.to_datetime(ch2)
-print pd.to_datetime(ga1)
-"""
