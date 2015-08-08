@@ -57,15 +57,14 @@ This is a summary / compilation of the notes from the initial brainstorming sess
 <br> - warnings
 <br> - directions
 <br> - river specs
-<ul>
-	<li>mileage
-	<li>gradient
-</ul>
-- top boaters
-<br>" "- Facebook like friends box
-  - click it, get ranked list
-  - rankings could include days in last year, river level dispersion, etc
-- photos
+<mileage
+<li>gradient
+<br><br>
+<b>top boaters</b>
+  <li>Facebook like friends box
+  <li>click it, get ranked list
+  <li>rankings could include days in last year, river level dispersion, etc
+photos
 - rapid descriptions
 
 Rivers I want to boat
