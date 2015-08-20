@@ -1,12 +1,11 @@
 # IWBT: I Went Boating Today
-<h3>Rob Hurst and Exley McCormick<br>
-Summer 2015</h3>
+### Rob Hurst and Exley McCormick<br>
+#### Summer 2015
 
 I Went Boating Today (IWBT) is a mobile solution to the information problems arising in the whitewater community. In the first round of design and development, the features we hope to implement are:
-<ol>
-	<li>Easily accessable realtime flow data
-	<li>Google Maps integration to allow for improved navigation to put ins and take outs.
-	<li>Paddling Logs
+1. Easily accessable realtime flow data
+2. Google Maps integration to allow for improved navigation to put ins and take outs.
+3. Paddling Logs
 </ol>
 I went boating today is designed as a mobile app front-end with web and back-end support provided for various features. Most of the real work will be done back-end and the app itself should just be a gui/wrapper for the back-end support (I think.)
 <br><br>
