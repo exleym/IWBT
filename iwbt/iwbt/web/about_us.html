@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+<title>{% block title %}IWBT{% endblock %}</title>
+
+{% block content %}
+    <div class="container" style="margin-top: 25px; background-color:black; alignment:center">
+        <br>
+        {% load staticfiles %}
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+                <li data-target="#myCarousel" data-slide-to="3"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <img src="https://i.imgur.com/lBAzkYT.jpg" alt="My image"/>
+                    <div class="carousel-caption">
+                        <h3 style="color:black">Ben Boofing Baby Falls</h3>
+                        <p style="color:black">Ben Pennington boofing Baby Falls on the Tellico.</p>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <img src="http://cdn.outdoorgearlab.com/photos/12/11/242661_13470_XL.jpg" alt="TallulahRob" width="1000" height="345">
+                    <div class="carousel-caption" style="color:black">
+                        <h3>Rob at Oceana</h3>
+                        <p>Rob Hurst bracing his way out of the hole at Oceana.</p>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <img src="http://www.awetstate.com/Runs/TallulahG%5C7.jpg" alt="BrandonSteps" width="1000" height="345">
+                    <div class="carousel-caption">
+                        <h3 style="color:black">Brandon on the Steps</h3>
+                        <p style="color:black">Brandon Nessler getting ready for a day on the Tallulah.</p>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <img src="http://www.travel-kyrgyzstan.com/wp-content/uploads/2013/08/IMG_1248.jpg" alt="Camping" width="1000" height="345">
+                    <div class="carousel-caption">
+                        <h3>Camping at Gauley</h3>
+                        <p>Bonnie, Exley, and Ben enjoying the crisp fall weather in Summersville, WV.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+
+        <h3>{{ temp_title }}</h3>
+
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pellentesque neque placerat imperdiet
+            ultricies. Duis ultricies lacus felis, eget faucibus magna placerat id. Class aptent taciti sociosqu ad
+            litora torquent per conubia nostra, per inceptos himenaeos. Nam sit amet ullamcorper sapien. Morbi sodales
+            tristique tortor, ut placerat risus fringilla egestas. Nulla facilisi. In ipsum elit, sodales sed pretium
+            nec, hendrerit sed ipsum. Morbi a purus lacus. Nam et aliquet quam. In hac habitasse platea dictumst.
+            Aliquam congue mauris eros, sed tristique leo vestibulum nec. Donec sit amet sem lorem. Cras quam lorem,
+            ultrices ut bibendum eget, dapibus nec felis.Vestibulum gravida mollis vehicula. Mauris suscipit pretium
+            nibh sed cursus. Aenean lobortis est porttitor, tristique metus ac, tincidunt ex. Aliquam sit amet semper
+            purus. Ut magna justo, placerat ut volutpat vitae, aliquam vitae tellus. Fusce venenatis erat ac neque
+            rutrum vehicula. Praesent iaculis blandit ante, non consequat arcu tincidunt vitae. Vestibulum gravida
+            nunc erat, elementum vulputate dolor sagittis et. Integer a sem dictum, interdum metus in, aliquet felis.
+        </p>
+        <p>
+            Maecenas tempus pellentesque ante. Morbi dictum enim nisi, vel posuere orci dictum et. In ac ultricies
+            nulla, eu varius nibh. Nulla dignissim elementum orci eu pretium. Sed feugiat ligula sed libero tincidunt
+            laoreet. Suspendisse euismod scelerisque hendrerit. Fusce cursus tortor nisi, vel ultricies dui molestie
+            eget. Suspendisse ullamcorper ante eu varius aliquet. Quisque vel fringilla massa.
+        </p>
+        <p>
+            Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas sem arcu, porta sed iaculis ac, eleifend a dui. Curabitur egestas sem vitae convallis placerat. Praesent placerat nisl at dolor molestie, quis suscipit felis mattis. Ut vitae bibendum augue, et maximus eros. Mauris id lacus varius nisl dignissim maximus. Ut id purus sed tellus ultricies efficitur non id lacus. Aenean lacus ante, placerat sit amet ex eget, ornare imperdiet ante. Donec vitae mi eu quam feugiat volutpat at congue diam.
+        </p>
+        <p>
+            Sed laoreet tempus ipsum vitae maximus. Aliquam vel ex at neque ornare bibendum consectetur eget quam. Fusce quis risus est. Donec mattis lacinia pharetra. Curabitur dictum placerat nisi, a ullamcorper nulla aliquet sed. Phasellus sit amet nisl nisi. Cras feugiat lorem massa. In bibendum quam ut urna laoreet interdum. Nulla sed diam vulputate, maximus purus ut, fermentum mauris. Aliquam erat volutpat. Morbi fringilla eu ipsum vel porta. In vel lacus ut felis ornare efficitur auctor id urna. Phasellus ex eros, rutrum sed tellus a, tempor pulvinar est. Vestibulum venenatis, est ac tempus elementum, est ante posuere nulla, ut viverra purus lorem at velit. Aenean auctor ante quis malesuada vehicula. Fusce luctus placerat vestibulum.
+        </p>
+        <p>
+            In ante metus, scelerisque eget massa posuere, accumsan ultrices mi. In eget ligula quis mauris porta pulvinar sit amet a augue. Phasellus tincidunt ultrices sapien, eget sollicitudin massa lobortis vitae. Nulla dapibus sodales justo, sit amet consectetur nibh tristique a. Sed feugiat ante vitae enim pretium euismod. Aliquam erat volutpat. Ut et neque non ex porttitor viverra. Pellentesque scelerisque, mi vitae viverra vestibulum, felis tellus lacinia magna, nec tincidunt odio sem vitae sapien. Suspendisse quis molestie libero.
+        </p>
+        <p>
+            Donec vel diam vulputate, egestas enim at, luctus magna. Sed at lorem finibus, mollis arcu sed, dignissim neque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum ut auctor purus. Maecenas nec risus porttitor, egestas est a, eleifend massa. Nam vitae ex risus. Cras in augue ultrices, aliquam metus et, pellentesque turpis. Duis egestas erat tristique, semper libero non, hendrerit ligula. Donec pharetra, est in laoreet euismod, mauris felis ultrices nunc, sed fermentum turpis magna sit amet mauris. Quisque elementum risus a laoreet mattis. Pellentesque id quam nec dolor feugiat maximus vel vel arcu.
+        </p>
+        <p>
+            Duis imperdiet ipsum quis dolor porttitor, nec aliquet sapien pulvinar. Ut non hendrerit elit. Cras sagittis consectetur nisi et tempor. Donec convallis nunc eget erat fringilla elementum. Maecenas ac tincidunt mi. Nam ac dictum dui. Vivamus leo nulla, euismod at odio vitae, condimentum lacinia magna. Cras congue eleifend gravida. Ut eu velit ut odio rhoncus imperdiet vel sit amet ipsum.
+        </p>
+        <p>
+            Ut id sem sed ex sagittis imperdiet. Integer imperdiet felis quis lacus varius lobortis. Phasellus mi justo, volutpat ac lectus a, sodales finibus diam. Donec mattis vel turpis eu iaculis. Vivamus hendrerit facilisis mi. Etiam ipsum nulla, blandit ut quam a, pharetra porttitor tortor. Donec sed diam felis. Morbi sit amet ipsum tortor. Nulla non libero dignissim, volutpat dolor quis, tempus augue.
+        </p>
+        <p>
+            Suspendisse accumsan enim a ultricies placerat. Aenean placerat, ex quis mollis suscipit, leo mauris iaculis purus, vel vestibulum velit turpis in sapien. Quisque bibendum eleifend nisl ac sagittis. Maecenas eu urna gravida, hendrerit augue eu, hendrerit risus. Aliquam non congue sem. Nunc justo magna, vestibulum ut dui eu, mollis eleifend eros. Vivamus orci neque, convallis eget lacus et, rutrum semper ex. Pellentesque in hendrerit erat. Integer erat erat, gravida sed orci nec, aliquet commodo lectus. Vivamus eros nisi, bibendum eu placerat quis, pretium non arcu. Nunc et facilisis ligula. Praesent aliquet tempor metus, id laoreet justo mollis ut. Aliquam at sollicitudin magna, semper tempor erat. Integer dictum tortor quis diam ornare rhoncus. Quisque ligula massa, euismod non purus eu, placerat tincidunt est. Quisque porttitor faucibus iaculis.
+        </p>
+        <p>
+            Vestibulum tristique orci sed nibh consequat ultricies. Fusce blandit lectus et semper porta. Maecenas ac elit sed erat euismod tristique id id erat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam ultricies quam quis ipsum maximus fringilla. Integer iaculis justo vel sem mattis, at porta eros convallis. Cras tempus augue eu elit lobortis, quis dignissim quam tristique. Morbi id velit ac turpis volutpat scelerisque. Etiam eleifend tempor eros fermentum maximus.
+        </p>
+        <p>
+            In quis elementum orci. Donec blandit sollicitudin condimentum. Nam vitae augue non sapien maximus facilisis consequat vitae eros. Integer ut pulvinar orci. Aenean in nunc ut lorem placerat pretium in in elit. Pellentesque commodo arcu est, eget fermentum nunc lacinia ut. Sed bibendum nunc et purus sodales pulvinar. Vivamus semper convallis tristique.</p>
+        </p>
+{% endblock %}

@@ -9,7 +9,7 @@ USE Iwbt;
 -- tables
 -- Table Gauges
 CREATE TABLE Gauges (
-    GaugeId int    NOT NULL ,
+    GaugeId int    NOT NULL AUTO_INCREMENT,
     RiverId int    NULL ,
     TimeStamp datetime    NOT NULL ,
     Flow int    NULL ,
@@ -18,15 +18,11 @@ CREATE TABLE Gauges (
 );
 
 -- Table PaddleLog
-CREATE TABLE PaddleLog (
-    TripId int    NOT NULL ,
+CREATE TABLE Trips (
+    TripId int    NOT NULL AUTO_INCREMENT ,
     UserId int    NOT NULL ,
     RiverId int    NOT NULL ,
     CreateDate date    NOT NULL ,
-    PaddlingDate date    NOT NULL ,
-    PutOnTime time    NOT NULL ,
-    SwimCount int    NOT NULL ,
-    SwimComments varchar(512)    NOT NULL ,
     CONSTRAINT PaddleLog_pk PRIMARY KEY (TripId)
 );
 
