@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+<title>{% block title %}Select Rivers{% endblock %}</title>
+
+{% block content %}
+    <!--<put some comments here about what's going on> -->
+    <div class="container" style="margin: 30px;">
+        <h2 style="margin-top: 30px">Select A River</h2>
+        <div class="list-group">
+            <a href="river/chattooga/section3.html" class="list-group-item" style="background-color:#99FF99">
+                <h4 class="list-group-item-heading">Chattooga</h4>
+                <p class="list-group-item-text">Section 3 - Earl's Ford to the Bridge</p>
+            </a>
+            <a href="river/chattooga/section4.html" class="list-group-item" style="background-color:#66E0FF">
+                <h4 class="list-group-item-heading">Chattooga</h4>
+                <p class="list-group-item-text">Section 4 - Bridge to the Lake</p>
+            </a>
+            <a href="river/tallulah.html" class="list-group-item" style="background-color:#FF6666">
+                <h4 class="list-group-item-heading">Tallulah</h4>
+                <p class="list-group-item-text">Tallulah Falls to the Lake</p>
+            </a>
+        </div>
+    </div>
+{% endblock %}
