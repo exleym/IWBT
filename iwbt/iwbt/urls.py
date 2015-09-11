@@ -17,12 +17,14 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from iwbt.views import *
+admin.autodiscover()
+import iwbt.views as main_views
 
 urlpatterns = [
-    url(r'^$', home),
-    url(r'^about_us/$', about_us),
-    url(r'^time/$', current_datetime),
-    url(r'^select_river/$', select_river),
-    url('r^river/', select_river), 
+    url(r'^$', main_views.home),
+    url(r'^about_us/$', main_views.about_us),
+    url(r'^time/$', main_views.current_datetime),
+    url(r'^select_river/$', main_views.select_river),
+    url(r'^river/(?P<year>[A-z])/$', main_views.show_river),
+    url(r'^admin/', include(admin.site.urls)),
 ]
