@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'paddlelog',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -79,7 +80,7 @@ WSGI_APPLICATION = 'iwbt.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Iwbt',
+        'NAME': 'iwbt_test',
 	'USER': 'root',
 	'PASSWORD': 'Z3pp3l1n',
 	'HOST': '127.0.0.1',
