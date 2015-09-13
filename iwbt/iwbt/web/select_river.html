@@ -7,6 +7,17 @@
     <div class="container" style="margin: 30px;">
         <h2 style="margin-top: 30px">Select A River</h2>
         <div class="list-group">
+            {% for o in river_list %}
+                <a href=o.river_url class="list-group-item" style="background-color:#99FF99">
+                    <h4 class="list-group-item-heading">o.river_name</h4>
+                    <p class="list-group-item-text">o.section_name</p>
+                </a>
+
+            {% enfor %}
+        </div>
+
+<!--
+        <div class="list-group">
             <a href="river/chattooga/section3.html" class="list-group-item" style="background-color:#99FF99">
                 <h4 class="list-group-item-heading">Chattooga</h4>
                 <p class="list-group-item-text">Section 3 - Earl's Ford to the Bridge</p>
@@ -20,5 +31,6 @@
                 <p class="list-group-item-text">Tallulah Falls to the Lake</p>
             </a>
         </div>
+-->
     </div>
 {% endblock %}
