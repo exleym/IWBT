@@ -22,7 +22,7 @@ class User(models.Model):
 class River(models.Model):
     river_name = models.CharField(max_length=64)
     section_name = models.CharField(max_length=64)
-    river_url = "river/" + river_name.lower() + "/" + section_name.lower + ".html"
+    short_description = models.CharField(max_length=128, blank=True)
     difficulty = models.CharField(max_length=16)
     max_diff = models.IntegerField(blank=True)
     gauge_id = models.ForeignKey(Gauge, blank=True)

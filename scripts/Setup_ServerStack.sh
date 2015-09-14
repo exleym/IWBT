@@ -22,6 +22,11 @@ USER="exley"
 # -------------------------------------------------------------------
 apt-get update
 apt-get install -y --force-yes curl mysql-server git
+apt-get install -y --force-yes python-dev libmysqlclient-dev
+
+# Install some python packages
+# -------------------------------------------------------------------
+pip install MySQL-python
 
 # Configure SSH Server
 # -------------------------------------------------------------------

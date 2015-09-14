@@ -1,6 +1,7 @@
 from django.template import Template, Context
 from django.http import HttpResponse, Http404
 from django.template.loader import get_template
+import paddlelog.models as plmods
 import datetime
 
 
@@ -12,7 +13,9 @@ def home(request):
 def select_river(request):
 	wd = '/home/exley/Projects/IWBT/iwbt/iwbt/web/'
 	t = get_template('select_river.html')
-	html = t.render(Context({'': ''}))
+	river_list = plmods.River.objects.all().order_by('river_name', 'section_name')
+	r_dict = {'river_list': river_list,}
+	html = t.render(Context(r_dict))
 	return HttpResponse(html)
 
 def about_us(request):
