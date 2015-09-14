@@ -49,6 +49,8 @@ coverage.xml
 
 # Django stuff:
 *.log
+iwbt/paddlelog/migrations
+
 
 # Sphinx documentation
 docs/_build/
