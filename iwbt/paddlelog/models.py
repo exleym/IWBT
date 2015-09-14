@@ -30,6 +30,9 @@ class River(models.Model):
     def __unicode__(self):
         return self.river_name + ' - ' + self.section_name
 
+    def get_url(self):
+        return self.river_name.lower().replace(' ', '') + '/' + self.section_name.lower().replace(' ', '')
+
 class Rapid(models.Model):
     river_id = models.ForeignKey(River)
     rapid_name = models.CharField(max_length=64)
