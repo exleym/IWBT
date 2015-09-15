@@ -82,8 +82,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'iwbt_test',
 	'USER': 'root',
-	#'PASSWORD': 'Z3pp3l1n',
-	'PASSWORD': 'root',
+	'PASSWORD': 'Z3pp3l1n',
+	#'PASSWORD': 'root',
 	'HOST': '127.0.0.1',
 	'PORT': '',
     }

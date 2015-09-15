@@ -30,8 +30,13 @@ def current_datetime(request):
 	html = "<html><body>It is now %s</body></html>" % now
 	return HttpResponse(html)
 
-def show_river(request):
+def show_river(request, river_name, section_name):
 	t = get_template('river_main.html')
+	section_name = section_name.replace('_', ' ')
+	river = plmods.River.objects.get(river_name=river_name, section_name=section_name)
+	river_info = {'river': river}
+	html = t.render(Context(river_info))
+	return HttpResponse(html)
 
 
 def _fetch_html_template(file_dir):

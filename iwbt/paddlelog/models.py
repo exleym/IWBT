@@ -4,9 +4,9 @@ from django.db import models
 # Create your models here.
 class Gauge(models.Model):
     usgs_id = models.CharField(max_length=32)
-
+    gauge_name = models.CharField(max_length=64, blank=True)
     def __unicode__(self):
-        return self.usgs_id
+        return self.gauge_name + ' - ' + self.usgs_id
 
 
 class User(models.Model):
@@ -31,7 +31,7 @@ class River(models.Model):
         return self.river_name + ' - ' + self.section_name
 
     def get_url(self):
-        return self.river_name.lower().replace(' ', '') + '/' + self.section_name.lower().replace(' ', '')
+        return self.river_name.lower().replace(' ', '_') + '/' + self.section_name.lower().replace(' ', '_')
 
 class Rapid(models.Model):
     river_id = models.ForeignKey(River)

@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^about_us/$', main_views.about_us),
     url(r'^time/$', main_views.current_datetime),
     url(r'^select_river/$', main_views.select_river),
-    url(r'^river/(?P<year>[A-z])/$', main_views.show_river),
+    url(r'^river/(?P<river_name>[A-z]+)/(?P<section_name>[A-z0-9_]+)/$', main_views.show_river),
+    #url(r'^river/(?P<river_name>[A-z]+)/(?P<section_name>[A-z0-9]', main_views.show_river),
     url(r'^admin/', include(admin.site.urls)),
 ]

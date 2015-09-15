@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-<title>{% block title %}{{river.name}}{% endblock %}</title>
+<title>{% block title %}{{river.river_name}}{% endblock %}</title>
 
 {% block content %}
     <!--<content framework for a river page -- TODO: need to make this flexible so it works for any river> -->
-    <div class="container" style="margin: 30px;">
-        <h2 style="margin-top: 30px">{{river.name}}</h2>
-        <h4>{{river.section}}</h4>
+    <div class="container" style="margin: 20px;">
+        <h2 style="margin-top: 70px; font-size:5vw">{{river.river_name}} - {{river.section_name}}</h2>
+        <h4 style="font-size:4vw">{{river.short_description}}</h4>
     </div>
 {% endblock %}
