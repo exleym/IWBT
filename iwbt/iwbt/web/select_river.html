@@ -6,7 +6,7 @@
     <!--<put some comments here about what's going on> -->
     <div class="container" style="margin: 10px;">
         <h2 style="margin-top: 50px">Select A River</h2>
-        <div class="list-group">
+        <div class="list-group" id="#river_drawers">
             {% for o in river_list %}
                 <a href="/river/{{ o.get_url }}" class="list-group-item" style="background-color:#99FF99">
                     <h4 class="list-group-item-heading">{{o.river_name}}</h4>

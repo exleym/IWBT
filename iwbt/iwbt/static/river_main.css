@@ -1,0 +1,18 @@
+
+@media (max-width: @screen-xs) {
+    #page_title{font-size: 8vw; margin-top: 110px}
+}
+
+@media (max-width: @screen-sm) {
+    #page_title{font-size: 8vw;  margin-top: 110px}
+}
+
+@media (max-width: @screen-md) {
+    #page_title{font-size: 8vw;  margin-top: 110px}
+}
+
+@media (min-width: @screen-lg) {
+    #page_title{font-size: 8vw;  margin-top: 110px}
+}
+
+#page_head{margin:20px}
