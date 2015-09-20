@@ -79,11 +79,10 @@ WSGI_APPLICATION = 'iwbt.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'iwbt_test',
-	'USER': 'root',
-	'PASSWORD': 'Z3pp3l1n',
-	#'PASSWORD': 'root',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'iwbt',
+	'USER': 'app_admin',
+	'PASSWORD': 'app_admin',
 	'HOST': '127.0.0.1',
 	'PORT': '',
     }

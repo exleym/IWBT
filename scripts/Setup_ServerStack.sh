@@ -41,12 +41,14 @@ virtual_env="/opt/venv1"
 HOSTNAME="iwbt"
 SSHPORT="22"
 USER="exley"
+PUSER="app_admin"
+PPWD="app_admin"
 
 apt-get update
 
 # Create Python Virtualenv
 # ---------------------------------------------------------------
-apt-get install python-virtualenv
+apt-get install -y --force-yes python-virtualenv
 virtualenv $virtual_env
 
 # Install some python packages
@@ -57,6 +59,7 @@ pip install MySQL-python
 pip install django
 pip install gunicorn
 pip install psycopg2
+pip install jsonfield
 
 # Clone Git
 cd "$virtual_env"
@@ -87,13 +90,22 @@ then
     if [ "$SSH_CONF" == '1' ]
     then
         mkdir -p ~/.ssh
-        sudo cp /etc/ssh/sshd_config /etc/ssh/ssh_config.bak
+        cp /etc/ssh/sshd_config /etc/ssh/ssh_config.bak
         cat $app_repo/IWBT/data/id_rsa.sharkbox.pub >> ~/.ssh/authorized_keys
-        if [ "SSH_RSA" == '1' ]
+        if [ "$SSH_RSA" == '1' ]
         then
             sed -i -e s/"#PasswordAuthentication.*"/'PaswordAuthentication no'/g /etc/ssh/sshd_config
 	fi
     fi
 fi
 
-
+# Configure Postgresql Server
+# -------------------------------------------------------------------
+# switch user to "postgres" to allow superuser access while configuring
+# postgres; create a superuser; create a database;
+su - postgres
+createdb "$DBNAME"
+createuser -U "$PGUSER"
+su -c "psql -d $DBNAME -c \"GRANT ALL PRIVILEGES ON DATABASE $DBNAME TO $PGUSER\""
+echo "*:*:*:$PGUSER:$PGPASS" > ~/.pgpass
+/etc/init.d/postgresql restart
