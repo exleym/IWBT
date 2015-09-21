@@ -61,12 +61,6 @@ pip install gunicorn
 pip install psycopg2
 pip install jsonfield
 
-# Clone Git
-cd "$virtual_env"
-git clone $app_repo
-deactivate
-
-
 # Optional Section to Configure a Machine via Full Install
 # SHOULD ONLY BE PERFORMED ON A VIRTUAL MACHINE OR RASPBERRY PI
 if [ "$install_type" == "full" ]
@@ -99,13 +93,28 @@ then
     fi
 fi
 
+# Clone Git Repo
+cd "$virtual_env"
+git clone $app_repo
+deactivate
+chown -R $USER IWBT
+
 # Configure Postgresql Server
 # -------------------------------------------------------------------
 # switch user to "postgres" to allow superuser access while configuring
 # postgres; create a superuser; create a database;
-su - postgres
-createdb "$DBNAME"
-createuser -U "$PGUSER"
-su -c "psql -d $DBNAME -c \"GRANT ALL PRIVILEGES ON DATABASE $DBNAME TO $PGUSER\""
+sudo -u postgres psql -c "CREATE DATABASE $DBNAME;"
+sudo -u postgres psql -c "CREATE USER $PGUSER;"
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE $DBNAME TO $PGUSER"
 echo "*:*:*:$PGUSER:$PGPASS" > ~/.pgpass
+cat >> /etc/postgresql/main/pg_hba.conf <<EOF
+local   all             all                                     md5
+EOF
 /etc/init.d/postgresql restart
+
+# Configure Django
+# -------------------------------------------------------------------
+cd $virtual_env/IWBT/iwbt
+source $virtual_env/bin/activate
+echo "from django.contrib.auth.models import User; User.create_superuser('$USER', '$EMAIL', '$USER')" | python manage.py shell
+deactivate
