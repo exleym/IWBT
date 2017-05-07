@@ -1,0 +1,21 @@
+
+.avatar {
+  height: 150px;
+  width: 150px;
+}
+
+.outlined-column {
+  background-color: blue;
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: black;
+}
+
+#page_title {
+  font-size: 8vw;
+}
+
+#page_head {
+  margin: 20px;
+  margin-top:70px
+}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+<title>{% block title %}{{river.river_name}}{% endblock %}</title>
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='river_main.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css">
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<!--<content framework for a river page -- TODO: need to make this flexible so it works for any river> -->
+<div class="container" id="page_head">
+{% if river %}
+  <h2 id="page_title">{{river.name}}</h2>
+  <h4 id="river_description" style="font-size:2.5vw">Placeholder</h4>
+{% else %}
+  <h2>There doesn't appear to be a river here ... <span onclick="addRiver()">Add One!</span></h2>
+{% endif %}
+</div>
+
+<script>
+function addRiver() {
+  swal({
+  title: 'Add a new river ... but not THE New River',
+  html:
+    '<span class="pull-left">Name</span><input id="swal-input1" class="swal2-input">' +
+    '<span class="pull-left">Area</span><input id="swal-input2" class="swal2-input">',
+  preConfirm: function () {
+    return new Promise(function (resolve) {
+      resolve([
+        $('#swal-input1').val(),
+        $('#swal-input2').val()
+      ])
+    })
+  },
+  onOpen: function () {
+    $('#swal-input1').focus()
+  }
+  }).then(function (result) {
+    $.ajax({
+      url: "{{ url_for('api_01.add_data') }}",
+      type: "POST"
+    })
+  }).catch(swal.noop)
+}
+</script>
+{% endblock %}
