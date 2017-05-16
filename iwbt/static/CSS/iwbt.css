@@ -1,0 +1,39 @@
+
+.avatar {
+  height: 150px;
+  width: 150px;
+}
+
+.outlined-column {
+  background-color: blue;
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: black;
+}
+
+.js-clickable {
+  color: blue;
+}
+.js-clickable:hover {
+  font-style: italic;
+}
+
+.river-item {
+  border-color: #aaaaaa;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  padding-left: 20px;
+}
+.river-item-favorite {
+  bonder-color: red;
+}
+
+#page_title {
+  font-size: 8vw;
+}
+
+#page_head {
+  margin: 20px;
+  margin-top:70px
+}

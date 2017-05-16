@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+<title>{% block title %}{{ user.alias }}{% endblock %}</title>
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/user.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css">
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid" id="page_head">
+{% if user %}
+  <h2 id="page_title">{{user.alias}}</h2>
+  <div class="col-sm-6 col-md-12">
+  <div class="col-sm-1 col-md-2"><img class="avatar" src="{{ url_for('static', filename="IMG/silhouette.png") }}"></div>
+  <div class="col-sm-4 col-md-5"><p>
+    The Mon Calamari were a bipedal, amphibious species with high-domed heads, webbed hands and large, goggle-like eyes.[1] In addition to being webbed, the Mon Calamari hand presented three suction-cup like holes on its palm, and featured five claw-tipped fingers: one opposable thumb, two long middle fingers, and two very short outer fingers.[2] Although they were shaped like flippers,[6] their feet could nevertheless fit into boots designed for human-like feet.[9] The females were distinguished from the males by their more prominent chest areas.[24] The individuals that hailed from the colder polar extremes of their planet were noticeably less colorful than those who came from the tropical zones.[7]
+
+    The Mon Calamari were vigorous swimmers and were capable of living underwater for long periods.[6]
+  </p></div>
+  <div class="col-sm-1 col-md-5">
+    <ul>
+      <li><b>Real Name:</b> {{ user.first_name }} {{ user.last_name }}
+      <li><b>Member Since:</b> {{ user.created.strftime('%m/%d/%Y') }}</li>
+      <li><b>Paddle Log:</b><a href="{{ url_for('social.paddle_log', alias=user.alias) }}"> 18 entries this year</a></li>
+      <li><b>Recent Trips:</b> {{ user.created.strftime('%m/%d/%Y') }}</li>
+    </ul>
+  </div>
+</div>
+{% else %}
+  <h2>There doesn't appear to be a river here ... <span onclick="addRiver()">Add One!</span></h2>
+{% endif %}
+<div>{{ url_for('static', filename='CSS/iwbt.css') }}<div>
+</div>
+
+{% endblock %}

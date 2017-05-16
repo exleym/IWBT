@@ -1,5 +1,0 @@
-#!/bin/bash
-
-# This creates a MySql Table titled CefHeader in the Research Database
-mysql -u root -p < "Gen_DataTables_v0-0-1.sql"
-
