@@ -2,7 +2,7 @@
 # Python Code to Parse USGS XML
 # This is a simple example script to fetch and parse XML objects
 # Will add database connectivity, logging, timing, and support for large batches later
-
+import datetime
 import urllib2
 import xml.etree.ElementTree as ET
 import json
@@ -63,11 +63,11 @@ class DataReader(object):
             flow = dict()
             for i in z[0][2][0]:
                 flow[i.tag.split("}")[1]] = i.text
-            flow['time'] = pd.to_datetime(flow['time'])
             self.gauges[gauge] = flow
 
     def _parse_json(self):
         j = json.loads(self.raw_data)
+        print j
         params = j['value']['queryInfo']['criteria']['variableParam'].replace('[','').replace(']','').split(',')
         param_ix = {x.strip(): params.index(x) for x in params}
         for x in j['value']['timeSeries']:
@@ -76,8 +76,8 @@ class DataReader(object):
             variable_name = x['variable']['variableName']
             variable_id = x['variable']['variableCode'][0]['value']
             value = x['values'][0]['value'][0]['value']
-            print {'location': location, 'gauge_id': gauge_id, 'variable_name': variable_name, 'variable_id': variable_id,
-                   'value': value}
+            self.gauges[gauge_id] = {'location': location, 'gauge_id': gauge_id, 'variable_name': variable_name, 'variable_id': variable_id,
+                   'value': value, 'timestamp': x['values'][0]['value'][0]['dateTime']}
 
         #print j['value']['timeSeries'][3]['sourceInfo']['siteName']
         #print j['value']['timeSeries'][3]['values'][0]['value'][0]['value']
@@ -92,8 +92,8 @@ if __name__ == '__main__':
     river_dict = {'chattooga_bridge': '02177000', 'chattooga_burrells': '02176930', 'gallatin': '06043500'}
     dr = DataReader(rivers=river_dict) #, data_format='waterml,2.0')
     print dr.get_flow(river_dict['chattooga_bridge'])
-    # print dr.get_flow(river_dict['chattooga_burrells'])
-    # print dr.get_flow(river_dict['gallatin'])
+    print dr.get_flow(river_dict['chattooga_burrells'])
+    print dr.get_flow(river_dict['gallatin'])
 
 
 

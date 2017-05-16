@@ -19,11 +19,13 @@ def create_app(config_name):
     login_manager.init_app(app)
 
     from iwbt.blueprints.api_01.views import api_01
+    from iwbt.blueprints.main.views import main
     from iwbt.blueprints.rivers.views import rivers
     from iwbt.blueprints.social.views import social
 
     app.register_blueprint(rivers, url_prefix='/river')
     app.register_blueprint(social, url_prefix='/user')
+    app.register_blueprint(main, url_prefix='/')
     app.register_blueprint(api_01, url_prefix='/api')
 
     with app.app_context():

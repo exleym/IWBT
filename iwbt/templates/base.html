@@ -34,9 +34,9 @@
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">River Info<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="/select_river">Select River</a></li>
+              <li><a href="{{ url_for('rivers.river_list') }}">Find a River</a></li>
               <li><a href="/local_rivers">Nearby Rivers</a></li>
-              <li><a href="/favorite_rivers">Favorites</a></li>
+              <li><a href="{{ url_for('rivers.favorites') }}">Favorites</a></li>
             </ul>
           </li>
           <li class="dropdown">

@@ -11,6 +11,24 @@
   border-color: black;
 }
 
+.js-clickable {
+  color: blue;
+}
+.js-clickable:hover {
+  font-style: italic;
+}
+
+.river-item {
+  border-color: #aaaaaa;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  padding-left: 20px;
+}
+.river-item-favorite {
+  bonder-color: red;
+}
+
 #page_title {
   font-size: 8vw;
 }

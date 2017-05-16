@@ -6,7 +6,7 @@ from flask_login import UserMixin
 from sqlalchemy import Boolean, Column, Date, DateTime, Float, ForeignKey, Integer, String, Table
 from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
-from iwbt.models import Base
+from iwbt.models import Base, Model
 
 
 trip_members = Table('TripMembers', Base.metadata,
@@ -16,7 +16,7 @@ trip_members = Table('TripMembers', Base.metadata,
                      )
 
 
-class PaddleLogEntry(Base):
+class PaddleLogEntry(Base, Model):
     __tablename__ = 'PaddleLogEntries'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('Users.id'))
@@ -28,12 +28,20 @@ class PaddleLogEntry(Base):
     user = relationship('User', backref='paddle_log', uselist=False)
     trip = relationship('Trip', backref='log_entries', uselist=False)
 
+    @property
+    def json(self):
+        json = self.shallow_json
+        json['user'] = self.user.shallow_json
+        json['trip'] = self.trip.shallow_json
+        return json
+
+
     def __repr__(self):
         return "<PaddleLogEntry: %r - %r>" % (self.user.name, self.trip.trip_date.strftime('%Y-%m-%d'))
 
 
 
-class Trip(Base):
+class Trip(Base, Model):
     __tablename__ = 'Trips'
     id = Column(Integer, primary_key=True)
     creator_id = Column(Integer, ForeignKey('Users.id'), nullable=False)
@@ -51,7 +59,7 @@ class Trip(Base):
         return "<Trip: %r (%r) on %r>" % (self.river.name, self.section.name, self.trip_date.strftime('%Y-%m-%d'))
 
 
-class User(Base, UserMixin):
+class User(Base, Model, UserMixin):
     __tablename__ = 'Users'
     id = Column(Integer, primary_key=True)
     alias = Column(String(64), nullable=False)
@@ -63,6 +71,15 @@ class User(Base, UserMixin):
     admin = Column(Boolean, default=False)
     created = Column(DateTime, default=datetime.now)
     updated = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+
+    @property
+    def json(self):
+        json = self.shallow_json
+        return json
+
+    @property
+    def shallow_json(self):
+        return {k: v for k, v in self.__dict__.iteritems() if k not in ["_sa_instance_state", "password_hash"]}
 
     @property
     def password(self):

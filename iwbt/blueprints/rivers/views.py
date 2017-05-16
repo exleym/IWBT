@@ -8,9 +8,22 @@ from iwbt.models.rivers import *
 rivers = Blueprint('rivers', __name__, url_prefix='river')
 
 
+@rivers.route('/list')
+def river_list():
+    session = get_session(current_app)
+    rivers = session.query(River).all()
+    return render_template('rivers/river_list.html', rivers=rivers)
+
+
 @rivers.route('/<name>')
-def user_page(name):
+def river_page(name):
     session = get_session(current_app)
     river = session.query(River).filter(River.name == name).first()
-    print river
     return render_template('rivers/river_main.html', river=river)
+
+
+@rivers.route('/favorites')
+@login_required
+def favorites():
+    session = get_session(current_app)
+    return render_template('rivers/favorites.html')

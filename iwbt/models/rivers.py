@@ -1,14 +1,20 @@
 """
     River Module contains class River
-    Interacts with database for creating, accessing, and updating entries in Iwbt.Rivers
+    Interacts with dataBase, Model for creating, accessing, and updating entries in Iwbt.Rivers
 """
 from datetime import datetime
-from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String
+from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String, Table
 from sqlalchemy.orm import relationship
-from iwbt.models import Base
+from iwbt.models import Base, Model
 
 
-class Area(Base):
+associate_user_favorites = Table('FavoriteRivers', Base.metadata,
+                                 Column('id', Integer, primary_key=True),
+                                 Column('user_id', Integer, ForeignKey('Users.id')),
+                                 Column('river_id', Integer, ForeignKey('Rivers.id')))
+
+
+class Area(Base, Model):
     __tablename__ = 'Areas'
     id = Column(Integer, primary_key=True)
     name = Column(String(64), nullable=False)
@@ -19,7 +25,7 @@ class Area(Base):
         return "<Area: %r>" % self.name
 
 
-class Gauge(Base):
+class Gauge(Base, Model):
     __tablename__ = 'Gauges'
     id = Column(Integer, primary_key=True)
     name = Column(String(64), nullable=False)
@@ -32,7 +38,7 @@ class Gauge(Base):
         return "<Gauge: %r>" % self.name
 
 
-class GaugeData(Base):
+class GaugeData(Base, Model):
     __tablename__ = 'GaugeData'
     id = Column(Integer, primary_key=True)
     gauge_id = Column(Integer, ForeignKey('Gauges.id'))
@@ -44,7 +50,7 @@ class GaugeData(Base):
         return "<GaugeData: %r (%r)>" % (self.gauge.name, self.timestamp.strftime('%Y-%m-%d %H:%M:%S'))
 
 
-class Rapid(Base):
+class Rapid(Base, Model):
     __tablename__ = 'Rapids'
     id = Column(Integer, primary_key=True)
     name = Column(String(64), nullable=False)
@@ -61,7 +67,7 @@ class Rapid(Base):
         return "<Rapid: %r on %r>" % (self.name, self.river.name)
 
 
-class River(Base):
+class River(Base, Model):
     __tablename__ = 'Rivers'
     id = Column(Integer, primary_key=True)
     name = Column(String(64), nullable=False)
@@ -71,11 +77,24 @@ class River(Base):
 
     area = relationship('Area', backref='rivers', uselist=False)
 
+    @property
+    def json(self):
+        json = {k: v for k, v in self.__dict__.iteritems() if k not in "_sa_instance_state"}
+        if self.area:
+            json['area'] = self.area.shallow_json
+        if self.rapids:
+            json['rapids'] = [r.shallow_json for r in self.rapids]
+        return json
+
+    @property
+    def current_flow(self):
+        return 550
+
     def __repr__(self):
         return "<River: %r>" % (self.name)
 
 
-class Section(Base):
+class Section(Base, Model):
     __tablename__ = 'Sections'
     id = Column(Integer, primary_key=True)
     name = Column(String(64), nullable=False)

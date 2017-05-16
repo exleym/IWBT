@@ -5,6 +5,8 @@ class Config:
     DEBUG = False
     CREATE_DB = False
     SECRET_KEY = 'RipItShredIt'
+    WUNDERGROUND_API_KEY = '3fb4ff0cfbe7a369'
+    NCDC_TOKEN = 'bvHJcsVnxZyGliDnfrFCAQsuWIPxuOfd'
 
 
 class DevelopmentConfig(Config):
