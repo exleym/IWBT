@@ -55,7 +55,7 @@ function addRiver() {
   }
   }).then(function (result) {
     $.ajax({
-      url: "{{ url_for('api_01.add_river') }}",
+      url: "{{ url_for('api_01.create_river') }}",
       type: "POST"
     })
   }).catch(swal.noop)
