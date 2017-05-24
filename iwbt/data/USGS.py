@@ -46,6 +46,7 @@ class DataReader(object):
         for r in self.rivers.keys():
             usgs_url += self.rivers[r] + ','
         usgs_url = usgs_url[:-1] + "&parameterCd=" + self.params
+        print usgs_url
         url_file = urllib2.urlopen(usgs_url)
         ret_data = url_file.read()
         url_file.close()

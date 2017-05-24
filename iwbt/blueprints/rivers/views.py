@@ -15,10 +15,10 @@ def river_list():
     return render_template('rivers/river_list.html', rivers=rivers)
 
 
-@rivers.route('/<name>')
-def river_page(name):
+@rivers.route('/<int:river_id>')
+def river_page(river_id):
     session = get_session(current_app)
-    river = session.query(River).filter(River.name == name).first()
+    river = session.query(River).filter(River.id == river_id).first()
     return render_template('rivers/river_main.html', river=river)
 
 
@@ -26,4 +26,4 @@ def river_page(name):
 @login_required
 def favorites():
     session = get_session(current_app)
-    return render_template('rivers/favorites.html')
+    return render_template('rivers/river_list.html', rivers=current_user.favorite_rivers)

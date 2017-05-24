@@ -26,7 +26,7 @@ def create_app(config_name):
     app.register_blueprint(rivers, url_prefix='/river')
     app.register_blueprint(social, url_prefix='/user')
     app.register_blueprint(main, url_prefix='/')
-    app.register_blueprint(api_01, url_prefix='/api')
+    app.register_blueprint(api_01, url_prefix='/api/v1.0')
 
     with app.app_context():
         get_db(app)

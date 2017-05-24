@@ -18,35 +18,17 @@
 {% if river %}
   <h2 id="page_title">{{river.name}}</h2>
   <h4 id="river_description" style="font-size:2.5vw">Placeholder</h4>
+  <div>
+    {% if river.gauges %}
+    <ul>
+      {% for gauge in river.gauges %}
+        <li>{{ gauge.name }}: {{ gauge.current_level }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
 {% else %}
   <h2>There doesn't appear to be a river here ... <span onclick="addRiver()">Add One!</span></h2>
 {% endif %}
 </div>
-
-<script>
-function addRiver() {
-  swal({
-  title: 'Add a new river ... but not THE New River',
-  html:
-    '<span class="pull-left">Name</span><input id="swal-input1" class="swal2-input">' +
-    '<span class="pull-left">Area</span><input id="swal-input2" class="swal2-input">',
-  preConfirm: function () {
-    return new Promise(function (resolve) {
-      resolve([
-        $('#swal-input1').val(),
-        $('#swal-input2').val()
-      ])
-    })
-  },
-  onOpen: function () {
-    $('#swal-input1').focus()
-  }
-  }).then(function (result) {
-    $.ajax({
-      url: "{{ url_for('api_01.add_data') }}",
-      type: "POST"
-    })
-  }).catch(swal.noop)
-}
-</script>
 {% endblock %}

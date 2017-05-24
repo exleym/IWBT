@@ -7,6 +7,7 @@ from sqlalchemy import Boolean, Column, Date, DateTime, Float, ForeignKey, Integ
 from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
 from iwbt.models import Base, Model
+from iwbt.models.rivers import associate_user_favorites
 
 
 trip_members = Table('TripMembers', Base.metadata,
@@ -35,10 +36,8 @@ class PaddleLogEntry(Base, Model):
         json['trip'] = self.trip.shallow_json
         return json
 
-
     def __repr__(self):
         return "<PaddleLogEntry: %r - %r>" % (self.user.name, self.trip.trip_date.strftime('%Y-%m-%d'))
-
 
 
 class Trip(Base, Model):
@@ -72,6 +71,8 @@ class User(Base, Model, UserMixin):
     created = Column(DateTime, default=datetime.now)
     updated = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
+    favorite_rivers = relationship('River', secondary=associate_user_favorites)
+
     @property
     def json(self):
         json = self.shallow_json
@@ -94,3 +95,13 @@ class User(Base, Model, UserMixin):
 
     def __repr__(self):
         return "<User: %r>" % self.alias
+
+
+class Booger(Base):
+    __tablename__ = 'Boogers'
+    id = Column(Integer, primary_key=True)
+    Color = Column(String(32))
+    Person = Column(Integer, ForeignKey('Users.id'))
+
+    def __repr__(self):
+        return "<Booger: Gross!>"

@@ -28,11 +28,18 @@ class Area(Base, Model):
 class Gauge(Base, Model):
     __tablename__ = 'Gauges'
     id = Column(Integer, primary_key=True)
+    usgs_id = Column(Integer, nullable=True)
     name = Column(String(64), nullable=False)
     river_id = Column(Integer, ForeignKey('Rivers.id'))
-    url = Column(String(128))
     created = Column(DateTime, default=datetime.now)
     updated = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+
+    river = relationship('River', backref='gauges', uselist=False)
+
+    def get_current_flow(self, flow_type='level'):
+        """ method to get current flow from USGS.
+        :param flow_type: 'level' or 'flow' -- return level in feet or flow in CFS """
+        return 100
 
     def __repr__(self):
         return "<Gauge: %r>" % self.name
@@ -45,6 +52,8 @@ class GaugeData(Base, Model):
     timestamp = Column(DateTime, default=datetime.now)
     level = Column(Float)
     flow_cfs = Column(Float)
+
+    gauge = relationship('Gauge', backref='data', uselist=False)
 
     def __repr__(self):
         return "<GaugeData: %r (%r)>" % (self.gauge.name, self.timestamp.strftime('%Y-%m-%d %H:%M:%S'))
@@ -78,17 +87,26 @@ class River(Base, Model):
     area = relationship('Area', backref='rivers', uselist=False)
 
     @property
+    def primary_gauge(self):
+        if self.gauges:
+            return self.gauges[0]
+        else:
+            return "No Gauge"
+
+    @property
     def json(self):
         json = {k: v for k, v in self.__dict__.iteritems() if k not in "_sa_instance_state"}
         if self.area:
             json['area'] = self.area.shallow_json
         if self.rapids:
             json['rapids'] = [r.shallow_json for r in self.rapids]
+        if self.primary_gauge:
+            json['gauge'] = self.primary_gauge.shallow_json
         return json
 
     @property
     def current_flow(self):
-        return 550
+        return {'flow': 550, 'timestamp': datetime.now()}
 
     def __repr__(self):
         return "<River: %r>" % (self.name)
