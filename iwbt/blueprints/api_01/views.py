@@ -59,6 +59,7 @@
     River
     Area
     Gauge
+    GaugeData
     User
     
 """
@@ -260,6 +261,19 @@ def delete_gauge(gauge_id):
 
 # Perhipheral river functionality
 # River-related queries that are not pulling the actual river objects
+# These are
+@api_01.route('/gauge_data/', methods=['POST'])
+def create_gauge_data():
+    session = get_session(current_app)
+    flow = request.json
+    if not flow:
+        return jsonify({'Status': 500, 'Message': 'You must post JSON to create a new data-point'})
+    gd = GaugeData(**flow)
+    session.add(gd)
+    session.commit()
+    return jsonify(201)
+
+
 @api_01.route('/river/<int:river_id>/flow', methods=['GET'])
 def check_flow_by_river_id(river_id):
     session = get_session(current_app)

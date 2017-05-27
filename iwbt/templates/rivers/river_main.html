@@ -22,7 +22,7 @@
     {% if river.gauges %}
     <ul>
       {% for gauge in river.gauges %}
-        <li>{{ gauge.name }}: {{ gauge.current_level }}</li>
+        <li>{{ gauge.name }}: {{ gauge.current_level.level }}</li>
       {% endfor %}
     </ul>
     {% endif %}

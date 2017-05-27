@@ -35,6 +35,11 @@ class Gauge(Base, Model):
     updated = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
     river = relationship('River', backref='gauges', uselist=False)
+    data = relationship('GaugeData', backref="gauge", order_by="desc(GaugeData.timestamp)")
+
+    @property
+    def current_level(self):
+        return self.data[0]
 
     def get_current_flow(self, flow_type='level'):
         """ method to get current flow from USGS.
@@ -50,10 +55,9 @@ class GaugeData(Base, Model):
     id = Column(Integer, primary_key=True)
     gauge_id = Column(Integer, ForeignKey('Gauges.id'))
     timestamp = Column(DateTime, default=datetime.now)
+    retrieved = Column(DateTime, default=datetime.now)
     level = Column(Float)
     flow_cfs = Column(Float)
-
-    gauge = relationship('Gauge', backref='data', uselist=False)
 
     def __repr__(self):
         return "<GaugeData: %r (%r)>" % (self.gauge.name, self.timestamp.strftime('%Y-%m-%d %H:%M:%S'))
@@ -91,7 +95,7 @@ class River(Base, Model):
         if self.gauges:
             return self.gauges[0]
         else:
-            return "No Gauge"
+            return None
 
     @property
     def json(self):
@@ -106,7 +110,10 @@ class River(Base, Model):
 
     @property
     def current_flow(self):
-        return {'flow': 550, 'timestamp': datetime.now()}
+        if self.primary_gauge:
+            return {'flow': self.primary_gauge.current_flow.level,
+                    'timestamp': self.primary_gauge.current_flow.timestamp}
+        return {'flow': 'No Gauge', 'timestamp': datetime.now()}
 
     def __repr__(self):
         return "<River: %r>" % (self.name)
