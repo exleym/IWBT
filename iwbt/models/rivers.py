@@ -109,14 +109,16 @@ class River(Base, Model):
         return json
 
     @property
-    def current_flow(self):
+    def current_data(self):
         if self.primary_gauge:
-            return {'flow': self.primary_gauge.current_flow.level,
-                    'timestamp': self.primary_gauge.current_flow.timestamp}
-        return {'flow': 'No Gauge', 'timestamp': datetime.now()}
+            return {'level': self.primary_gauge.current_level.level,
+                    'flow': self.primary_gauge.current_level.flow_cfs,
+                    'timestamp': self.primary_gauge.current_level.timestamp }
+        return {'flow': None, 'level': None, 'timestamp': datetime.now()}
 
     def __repr__(self):
         return "<River: %r>" % (self.name)
+
 
 
 class Section(Base, Model):

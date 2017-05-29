@@ -22,11 +22,13 @@ simple JSON parser to pull relevant data from the return string.
 Example (pseudocode) python object for parsing XLM from USGS
 
 ```python
-class DataReader(object):  
-    def get_flow(self, gauge=None):
-        # Take optional input of gauge
-	    # return flows for all defined gauges.
-	    self._read_json(gauge)
+class USGSDataReader(DataReader): 
+    """ class for getting and parsing USGS data. WebAPI tools should have the 
+        same API for each one, so they can all be used polymorphically """
+    def get_data(self, gauge=None):
+        """ Take optional input of gauge; return flows for all defined gauges. 
+        """
+        self._read_json(gauge)
         self._parse_flow_xml()
         return self.gauges[gauge]  # return flow for individual gauge
 ```
