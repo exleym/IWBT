@@ -5,7 +5,7 @@
 from datetime import datetime
 from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String, Table, UniqueConstraint
 from sqlalchemy.orm import relationship
-from iwbt.models import Base, Model
+from . import Base, Model
 
 
 associate_user_favorites = Table('FavoriteRivers', Base.metadata,

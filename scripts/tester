@@ -1,0 +1,63 @@
+#!/bin/bash
+#
+# Setup Script to install necessary utils for running IWBT
+# ------------------------------------------------------------------
+#
+# After running this script, you should be able to use the IWBT
+# stack with no real issues. This includes interacting with back-end
+# stuff and serving the website / phone apps.
+
+
+# -------------------------------------------------------------------
+# Settings
+# -------------------------------------------------------------------
+# These are user editable variables that change the way the installer
+# operates
+
+
+# USER SETTING: Install Type
+# 1. Set this value to 'local' if installing on an already existing
+#    Machine. This should be standard if you are installing on a
+#    desktop.
+# 2. Set this value to 'full' if installing on a virtual box or 
+#    a raspberry pi
+install_type='local'
+
+# SSH SETTINGS: SSH Setup
+# If you are doing a full install, you'll need to configure SSH on
+# the remote machine. If you're doing a local install, set SSH_CONF
+# to 0
+SSH_CONF=1
+SSH_RSA=1
+
+# Variables
+# -------------------------------------------------------------------
+app_name="iwbt_install"
+app_repo="https://github.com/exleym/IWBT.git"
+virtual_env="/opt/venv1"
+DBNAME="iwbt"
+
+# Define user variables
+# -------------------------------------------------------------------
+HOSTNAME="iwbt"
+SSHPORT="22"
+USER="exley"
+PGUSER="app_admin"
+PGPASS="app_admin"
+
+# Configure Postgresql Server
+# -------------------------------------------------------------------
+# switch user to "postgres" to allow superuser access while configuring
+# postgres; create a superuser; create a database;
+echo "*:*:*:$PGUSER:$PGPASS" > ~/.pgpass
+chmod 0600 ~/.pgpass
+
+echo "running switch user..."
+sudo -u postgres
+echo "done switching user; running create db..."
+createdb iwbt
+echo "done creating db; creating user..."
+createuser -U "$PGUSER"
+echo "done creating user; granting privileges..."
+su -c "psql -d $DBNAME -c \"GRANT ALL PRIVILEGES ON DATABASE $DBNAME TO $PGUSER\""
+echo "script complete;"

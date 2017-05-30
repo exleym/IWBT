@@ -65,9 +65,9 @@
 """
 from flask import Blueprint, current_app, jsonify, request
 from flask_login import current_user
-from iwbt import get_db, get_session
-from iwbt.models.rivers import *
-from iwbt.models.social import *
+from ... import get_db, get_session
+from ... models.rivers import *
+from ... models.social import *
 from sqlalchemy import desc
 
 api_01 = Blueprint('api_01', __name__, url_prefix='api/v1.0')

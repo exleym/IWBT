@@ -4,7 +4,7 @@
 from datetime import datetime
 from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String, Table
 from sqlalchemy.orm import relationship
-from iwbt.models import Base, Model
+from . import Base, Model
 
 
 class WeatherStation(Base):
