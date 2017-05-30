@@ -3,7 +3,7 @@
     Interacts with dataBase, Model for creating, accessing, and updating entries in Iwbt.Rivers
 """
 from datetime import datetime
-from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String, Table
+from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String, Table, UniqueConstraint
 from sqlalchemy.orm import relationship
 from iwbt.models import Base, Model
 
@@ -52,6 +52,7 @@ class Gauge(Base, Model):
 
 class GaugeData(Base, Model):
     __tablename__ = 'GaugeData'
+    __table_args__ = (UniqueConstraint('gauge_id', 'timestamp', name="UQ_GaugeData_gauge_id__timestamp"), )
     id = Column(Integer, primary_key=True)
     gauge_id = Column(Integer, ForeignKey('Gauges.id'))
     timestamp = Column(DateTime, default=datetime.now)
