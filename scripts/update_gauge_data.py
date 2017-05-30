@@ -1,3 +1,6 @@
+import os
+os.environ["PYTHONPATH"] = "~/Projects/IWBT" #:{}".format(os.environ["PYTHONPATH"])
+
 from iwbt.data.readers import USGSDataReader
 import requests
 

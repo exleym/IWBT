@@ -5,8 +5,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from config import config
-from iwbt.models import Base
-from iwbt.models.social import User
+from . models import Base
+from . models.social import User
 
 login_manager = LoginManager()
 bootstrap = Bootstrap()
@@ -18,10 +18,10 @@ def create_app(config_name):
     bootstrap.init_app(app)
     login_manager.init_app(app)
 
-    from iwbt.blueprints.api_01.views import api_01
-    from iwbt.blueprints.main.views import main
-    from iwbt.blueprints.rivers.views import rivers
-    from iwbt.blueprints.social.views import social
+    from . blueprints.api_01.views import api_01
+    from . blueprints.main.views import main
+    from . blueprints.rivers.views import rivers
+    from . blueprints.social.views import social
 
     app.register_blueprint(rivers, url_prefix='/river')
     app.register_blueprint(social, url_prefix='/user')

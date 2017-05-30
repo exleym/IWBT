@@ -6,8 +6,8 @@ from flask_login import UserMixin
 from sqlalchemy import Boolean, Column, Date, DateTime, Float, ForeignKey, Integer, String, Table
 from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
-from iwbt.models import Base, Model
-from iwbt.models.rivers import associate_user_favorites
+from . import Base, Model
+from . rivers import associate_user_favorites
 
 
 trip_members = Table('TripMembers', Base.metadata,
