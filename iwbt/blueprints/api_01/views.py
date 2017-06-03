@@ -65,6 +65,7 @@
 """
 from flask import Blueprint, current_app, jsonify, request
 from flask_login import current_user
+from pymysql.err import IntegrityError
 from ... import get_db, get_session
 from ... models.rivers import *
 from ... models.social import *
@@ -80,7 +81,7 @@ api_01 = Blueprint('api_01', __name__, url_prefix='api/v1.0')
 def create_river():
     """ POSTing to /api/rivers will create a new River object in the database """
     if not request.json:
-        return jsonify({'ErrorCode': 500, 'ErrorMessage': 'You must post JSON to create a new River'})
+        return jsonify({'Error': 'You must post JSON to create a new River'}), 400
     session = get_session(current_app)
     river = River(**request.json)
     session.add(river)
@@ -114,10 +115,10 @@ def update_river(river_id):
     session = get_session(current_app)
     put_data = request.json
     if not put_data:
-        return jsonify({'Status': 500, 'Message': "You can't put data without data!"})
+        return jsonify({'Error': "You can't put data without data!"}), 400
     gauge = session.query(River).filter(River.id == river_id).first()
     if not gauge:
-        return jsonify({'Status': 404, 'Message': 'No river found with id {}'.format(river_id)})
+        return jsonify({'Error': 'No river found with id {}'.format(river_id)}), 404
     for k, v in put_data.iteritems():
         setattr(gauge, k, v)
     session.add(gauge)
@@ -130,7 +131,7 @@ def delete_river(river_id):
     session = get_session(current_app)
     river = session.query(River).filter(River.id == river_id).first()
     if not river:
-        return jsonify({'Status': 404, 'Message': 'No river found with id {}'.format(river_id)})
+        return jsonify({'Error': 'No river found with id {}'.format(river_id)}), 404
     session.delete(river)
     session.commit()
     return jsonify(200)
@@ -143,7 +144,7 @@ def delete_river(river_id):
 def create_area():
     """ POSTing to /api/v1.0/areas will create a new Area object in the database """
     if not request.json:
-        return jsonify({'ErrorCode': 500, 'ErrorMessage': 'You must post JSON to create a new Area'})
+        return jsonify({'Error': 'You must post JSON to create a new Area'}), 400
     session = get_session(current_app)
     area = Area(name=request.json['name'])
     session.add(area)
@@ -156,7 +157,7 @@ def read_area_by_id(area_id):
     session = get_session(current_app)
     area = session.query(Area).filter(Area.id == area_id).first()
     if not area:
-        return jsonify({'ErrorCode': 404, 'ErrorMessage': 'No area found with id {}'.format(area_id)})
+        return jsonify({'Error': 'No area found with id {}'.format(area_id)}), 404
     return jsonify(area.shallow_json)
 
 
@@ -173,10 +174,10 @@ def update_area(area_id):
     session = get_session(current_app)
     put_data = request.json
     if not put_data:
-        return jsonify({'Status': 500, 'Message': "You can't put data without data!"})
+        return jsonify({'Error': "You can't put data without data!"}), 400
     area = session.query(Area).filter(Area.id == area_id).first()
     if not area:
-        return jsonify({'Status': 404, 'Message': 'No river found with id {}'.format(area_id)})
+        return jsonify({'Error': 'No river found with id {}'.format(area_id)}), 404
     for k, v in put_data.iteritems():
         setattr(area, k, v)
     session.add(area)
@@ -190,7 +191,7 @@ def delete_area(area_id):
     session = get_session(current_app)
     area = session.query(Area).filter(Area.id == area_id).first()
     if not area:
-        return jsonify({'Status': 404, 'Message': 'No area found with id {}'.format(area_id)})
+        return jsonify({'Error': 'No area found with id {}'.format(area_id)}), 404
     session.delete(area)
     session.commit()
     return jsonify(201)
@@ -216,7 +217,7 @@ def read_gauge_by_id(gauge_id):
     session = get_session(current_app)
     gauge = session.query(Gauge).filter(Gauge.id == gauge_id).first()
     if not gauge:
-        return jsonify({'Status': 404, 'Message': 'No gauge found with id {}'.format(gauge_id)})
+        return jsonify({'Error': 'No gauge found with id {}'.format(gauge_id)}), 404
     return jsonify(gauge.shallow_json)
 
 
@@ -226,7 +227,7 @@ def read_gauges():
     session = get_session(current_app)
     gauges = session.query(Gauge).all()
     if not gauges:
-        return jsonify({'Status': 404, 'Message': 'No Gauge objects available'})
+        return jsonify({'Error': 'No Gauge objects available'}), 404
     return jsonify([g.shallow_json for g in gauges])
 
 
@@ -236,10 +237,10 @@ def update_gauge(gauge_id):
     session = get_session(current_app)
     put_data = request.json
     if not put_data:
-        return jsonify({'Status': 500, 'Message': "You can't put data without data!"})
+        return jsonify({'Error': "You can't put data without data!"}), 400
     gauge = session.query(Gauge).filter(Gauge.id == gauge_id).first()
     if not gauge:
-        return jsonify({'Status': 404, 'Message': 'No gauge found with id {}'.format(gauge_id)})
+        return jsonify({'Error': 'No gauge found with id {}'.format(gauge_id)}), 404
     for k, v in put_data.iteritems():
         setattr(gauge, k, v)
     session.add(gauge)
@@ -253,7 +254,7 @@ def delete_gauge(gauge_id):
     session = get_session(current_app)
     gauge = session.query(Area).filter(Gauge.id == gauge_id).first()
     if not gauge:
-        return jsonify({'Status': 404, 'Message': 'No gauge found with id {}'.format(gauge_id)})
+        return jsonify({'Error': 'No gauge found with id {}'.format(gauge_id)}), 404
     session.delete(gauge)
     session.commit()
     return jsonify(201)
@@ -267,10 +268,13 @@ def create_gauge_data():
     session = get_session(current_app)
     flow = request.json
     if not flow:
-        return jsonify({'Status': 500, 'Message': 'You must post JSON to create a new data-point'})
+        return jsonify({'Error': 'You must post JSON to create a new data-point'}), 405
     gd = GaugeData(**flow)
     session.add(gd)
-    session.commit()
+    try:
+        session.commit()
+    except:
+        return jsonify({'Error': 'You are attempting to add a duplicate datapoint'}), 409
     return jsonify(201)
 
 
@@ -328,7 +332,7 @@ def get_user_logs_by_alias(alias):
 @api_01.route('/log/create', methods=['POST'])
 def add_log_entry():
     if not request.json:
-        return jsonify({'ErrorCode': 500, 'ErrorMessage': 'You must post JSON to create a new River'})
+        return jsonify({'Error': 'You must post JSON to create a new River'}), 400
     session = get_session(current_app)
     user_alias = request.json['user_alias'] or None
     if user_alias:

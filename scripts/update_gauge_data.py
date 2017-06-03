@@ -19,7 +19,8 @@ def main():
                    "timestamp": gdata['timestamp'],
                    "level": gdata['level'],
                    "flow_cfs": gdata['flow_cfs']}
-        requests.post(API_BASE + '/gauge_data/', json=package)
+        resp = requests.post(API_BASE + '/gauge_data/', json=package)
+        print resp, resp.json()
 
 if __name__ == '__main__':
     main()

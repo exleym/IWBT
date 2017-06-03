@@ -10,7 +10,7 @@ class Config:
 
 
 class DevelopmentConfig(Config):
-    DATABASE_URI = 'mysql+pymysql://root:Z3pp3l1n@localhost:3306/iwbt'
+    DATABASE_URI = 'postgresql+psycopg2://iwbt_admin:kayabear@localhost:5432/iwbt'
     DEBUG = True
     CREATE_DB = True
 

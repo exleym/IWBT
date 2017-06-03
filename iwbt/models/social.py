@@ -96,12 +96,3 @@ class User(Base, Model, UserMixin):
     def __repr__(self):
         return "<User: %r>" % self.alias
 
-
-class Booger(Base):
-    __tablename__ = 'Boogers'
-    id = Column(Integer, primary_key=True)
-    Color = Column(String(32))
-    Person = Column(Integer, ForeignKey('Users.id'))
-
-    def __repr__(self):
-        return "<Booger: Gross!>"
