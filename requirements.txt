@@ -11,6 +11,8 @@ Flask-Login==0.4.0
 Flask-Script==2.0.5
 Flask-SQLAlchemy==2.2
 Flask-WTF==0.14.2
+gevent==1.2.1
+greenlet==0.4.12
 gunicorn==19.7.1
 imagesize==0.7.1
 itsdangerous==0.24
