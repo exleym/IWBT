@@ -1,6 +1,7 @@
 from flask import Flask, g
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -53,7 +54,10 @@ def get_session(app):
 
 
 def connect(app):
-    eng = create_engine(app.config['DATABASE_URI'])
+    if os.getenv('DATABASE_URL'):
+        eng = create_engine(os.getenv('DATABASE_URL'))
+    else:
+        eng = create_engine(app.config['DATABASE_URI'])
     if app.config['CREATE_DB']:
         Base.metadata.create_all(eng)
     return eng
