@@ -1,1 +1,1 @@
-web: gunicorn -w 4 -b 0.0.0.0:8000 -k gevent manage:app --log-file -
+web: gunicorn -w 4 -b 0.0.0.0:$PORT -k gevent manage:app --log-file -
