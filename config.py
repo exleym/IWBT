@@ -13,7 +13,7 @@ class DevelopmentConfig(Config):
     #DATABASE_URI = 'postgresql+psycopg2://iwbt_admin:kayabear@localhost:5432/iwbt'
     DATABASE_URI = 'mysql+pymysql://iwbt_admin:wetoodeep42@localhost:3306/iwbt'
     DEBUG = True
-    CREATE_DB = True
+    #CREATE_DB = True
 
 
 class TestingConfig(Config):
