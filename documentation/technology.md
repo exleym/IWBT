@@ -59,3 +59,8 @@ and where do we want to go?
   this obsolete?
   * should we focus on dockerizing it, and really commit to that deployment? 
   * seems like that's what we're moving towards at work.
+
+### Valuable Information and Links
+[RealPython Flask Tutorial](https://realpython.com/blog/python/flask-by-example-part-1-project-setup/) - a 
+step-by-step guide for building a full-featured Flask / Postgres / Heroku / Angular application. Covers a 
+whole bunch of the bugs and issues we have hit in the past.  
