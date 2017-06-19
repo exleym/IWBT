@@ -1,13 +1,14 @@
+import os
+
 from flask import Flask, g
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
-import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from config import config
-from . models import Base
-from . models.social import User
+from .models import Base
+from .models.social import User
 
 login_manager = LoginManager()
 bootstrap = Bootstrap()
@@ -19,7 +20,7 @@ def create_app(config_name):
     bootstrap.init_app(app)
     login_manager.init_app(app)
 
-    from . blueprints.api_01.views import api_01
+    from iwbt.blueprints.api_01 import api_01
     from . blueprints.main.views import main
     from . blueprints.rivers.views import rivers
     from . blueprints.social.views import social

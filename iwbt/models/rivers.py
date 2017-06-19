@@ -16,6 +16,7 @@ associate_user_favorites = Table('FavoriteRivers', Base.metadata,
 
 class Area(Base, Model):
     __tablename__ = 'Areas'
+    __table_args__ = (UniqueConstraint('name', name='_area_name_uc'),)
     id = Column(Integer, primary_key=True)
     name = Column(String(64), nullable=False)
     created = Column(DateTime, default=datetime.now)

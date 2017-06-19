@@ -1,4 +1,5 @@
-from flask import Blueprint, current_app, render_template, redirect, request, url_for, flash
+from flask import Blueprint, current_app, render_template, send_file
+from flask import redirect, request, url_for, flash
 
 from flask_login import login_user, logout_user, login_required, current_user
 
@@ -12,3 +13,9 @@ main = Blueprint('main', __name__, url_prefix='')
 def index():
     session = get_session(current_app)
     return render_template('index.html')
+
+
+
+@main.route('ng')
+def angular():
+    return send_file('templates/ngtest.html')
