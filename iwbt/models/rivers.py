@@ -108,6 +108,8 @@ class River(Base, Model):
             json['rapids'] = [r.shallow_json for r in self.rapids]
         if self.primary_gauge:
             json['gauge'] = self.primary_gauge.shallow_json
+        if self.sections:
+            json['sections'] = [s.shallow_json for s in self.sections]
         return json
 
     @property

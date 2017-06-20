@@ -47,12 +47,15 @@ class MissingJSONError(IwbtError):
 
 
 class PostValidationError(IwbtError):
-    def __init__(self):
+    def __init__(self, missing=True):
         super(PostValidationError, self).__init__()
         self.name = "PostValidationError"
         self.err_code = 400
         self.shallow = {"Error": "POST request did not pass validation"}
-        self.verbose = {"Details": "You missed a field!"}
+        if missing:
+            self.verbose = {"Details": "You missed a field!"}
+        else:
+            self.verbose = {"Details": "You passed an unacceptable field!"}
 
 
 class DatabaseIntegrityError(IwbtError):

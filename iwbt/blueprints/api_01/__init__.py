@@ -80,6 +80,19 @@ def verify_required_fields(json, expected_fields):
     return True
 
 
+def verify_allowed_fields(json, allowed_fields):
+    """ Ensure that no fields are passed that are not permitted for a
+        given resource.
+        :param json: dictionary of POST data passed in request
+        :param allowed_fields: list of strings of acceptable parameters
+        :return: True if all parameters are allowed; else False
+    """
+    for k in json.keys():
+        if k not in allowed_fields:
+            return False
+    return True
+
+
 def error_out(error):
     return error.json_response(True)
 
@@ -92,6 +105,7 @@ from . resources.gauges import (create_gauge, read_gauge_by_id, read_gauges,
 from . resources.rivers import (create_river, read_river_by_id,
                                 read_river_by_name, read_rivers, update_river,
                                 delete_river)
+from . resources.sections import (create_section)
 from . resources.users import (get_log_by_id, get_user_by_id,
                                get_user_by_alias, get_user_logs_by_id,
                                get_user_logs_by_alias, add_log_entry,
