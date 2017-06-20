@@ -34,7 +34,7 @@ def create_river():
     river = session.query(River).filter(River.name == name).first()
     response = jsonify()
     response.data = jsonify(river.json)
-    response.headers['Access-Control-Allow-Origin'] = request.headers['Access-Control-Allow-Origin']
+    #response.headers['Access-Control-Allow-Origin'] = request.headers['Access-Control-Allow-Origin']
     return jsonify(river.json)
 
 
