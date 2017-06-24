@@ -1,6 +1,5 @@
 import json
 import unittest
-import requests
 from sqlalchemy import create_engine
 from iwbt import create_app
 from iwbt.models.rivers import Base
@@ -74,17 +73,42 @@ class TestRiverResourceAPI(unittest.TestCase):
 
     def test_river_with_sections(self):
         with self.app.test_request_context():
-            a = self.create_resource('area', {'name': 'Test Area 01'})
-            river = self.create_resource('river', {'name': 'Test River 01',
-                                                   'area_id': 1})
-            section1 = self.create_resource('section')
+            self.create_resource('area', {'name': 'Test Area 01'})
+            self.create_resource('river', {'name': 'Test River 01',
+                                           'area_id': 1})
+            section1 = self.create_resource('section', {'name': 'Section 1',
+                                                        'river_id': 1})
+            section2 = self.create_resource('section', {'name': 'Section 2',
+                                                        'river_id': 1})
+            river = self.get_resource('river', 1)
+            river = json.loads(river.data)
+            section1 = json.loads(section1.data)
+            section2 = json.loads(section2.data)
+            self.assertEqual(river['sections'][0]['name'], section1['name'])
+            self.assertEqual(river['sections'][1]['name'], section2['name'])
 
+    def test_river_with_missing_name(self):
+        with self.app.test_request_context():
+            resp = self.create_resource('river', {'area_id': 1})
+            error = json.loads(resp.data)
+            self.assertEqual(error['Details'], 'You missed a field!')
 
+    def test_river_with_null_name(self):
+        with self.app.test_request_context():
+            resp = self.create_resource('river', {'area_id': 1,
+                                                  'name': None})
+            error = json.loads(resp.data)
+            self.assertEqual(error['ErrorName'], 'DatabaseIntegrityError')
 
-
-    # def test_create_river(self):
-    #     a_resp = self.create_resource('area', {'name': 'Test Area 01'})
-    #     area_id = a_resp.json()['id']
-    #     r = self.create_resource('river', {'name': 'Test River 01',
-    #                                        'area_id': area_id})
-    #     self.assertEquals(r.json()['name'], 'Test River 01')
+    def test_create_rapids(self):
+        with self.app.test_request_context():
+            self.create_resource('area', {'name': 'Test Area 01'})
+            self.create_resource('river', {'name': 'Test River 01',
+                                           'area_id': 1})
+            section1 = self.create_resource('section', {'name': 'Section 1',
+                                                        'river_id': 1})
+            rapid = self.create_resource('rapid', {'name': 'Death Cave',
+                                                   'river_id': 1,
+                                                   'section_id': 1})
+            print(rapid)
+            self.assertEqual(json.loads(rapid.data)['name'], 'Death Cave')

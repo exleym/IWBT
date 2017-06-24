@@ -6,7 +6,10 @@ from iwbt.util.api_errors import (DatabaseIntegrityError,
                                   MissingJSONError,
                                   PostValidationError)
 
-from iwbt.blueprints.api_01 import api_01, error_out, verify_required_fields
+from iwbt.blueprints.api_01 import (api_01,
+                                    error_out,
+                                    verify_allowed_fields,
+                                    verify_required_fields)
 
 
 # API Routes for accessing and managing river information
@@ -14,14 +17,17 @@ from iwbt.blueprints.api_01 import api_01, error_out, verify_required_fields
 # retrieve a list of rivers, add new rivers, update existing rivers.
 @api_01.route('/river', methods=['POST'])
 def create_river():
-    """ POST to /api/rivers will create a new River object in the database
+    """ POST to /api/river will create a new River object in the database
     """
     if not request.json:
         return error_out(MissingJSONError())
     expected_fields = ['name', 'area_id']
+    allowed_fields = ['name', 'area_id']
 
     # Ensure that required fields have been included in JSON data
     if not verify_required_fields(request.json, expected_fields):
+        return error_out(PostValidationError())
+    if not verify_allowed_fields(request.json, allowed_fields):
         return error_out(PostValidationError())
     session = get_session(current_app)
     river = River(**request.json)

@@ -71,11 +71,33 @@ from flask import Blueprint
 api_01 = Blueprint('api_01', __name__, url_prefix='api/v1.0')
 
 
+def verify(json, required_fields, allowed_fields=None):
+    if not allowed_fields:
+        allowed_fields = []
+    allowed_fields += required_fields
+    passes_required = verify_required_fields(json, required_fields)
+    passes_allowed = verify_allowed_fields(json, allowed_fields)
+    return passes_required * passes_allowed
+
+
 def verify_required_fields(json, expected_fields):
     for field in expected_fields:
         try:
             assert field in json
         except AssertionError:
+            return False
+    return True
+
+
+def verify_allowed_fields(json, allowed_fields):
+    """ Ensure that no fields are passed that are not permitted for a
+        given resource.
+        :param json: dictionary of POST data passed in request
+        :param allowed_fields: list of strings of acceptable parameters
+        :return: True if all parameters are allowed; else False
+    """
+    for k in json.keys():
+        if k not in allowed_fields:
             return False
     return True
 
@@ -89,9 +111,11 @@ from . resources.areas import (create_area, read_area_by_id, read_areas,
 from . resources.flow import (create_gauge_data, check_flow_by_river_id)
 from . resources.gauges import (create_gauge, read_gauge_by_id, read_gauges,
                                 update_gauge, delete_gauge)
+from . resources.rapids import (create_rapid)
 from . resources.rivers import (create_river, read_river_by_id,
                                 read_river_by_name, read_rivers, update_river,
                                 delete_river)
+from . resources.sections import (create_section)
 from . resources.users import (get_log_by_id, get_user_by_id,
                                get_user_by_alias, get_user_logs_by_id,
                                get_user_logs_by_alias, add_log_entry,
