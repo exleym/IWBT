@@ -105,10 +105,9 @@ class TestRiverResourceAPI(unittest.TestCase):
             self.create_resource('area', {'name': 'Test Area 01'})
             self.create_resource('river', {'name': 'Test River 01',
                                            'area_id': 1})
-            section1 = self.create_resource('section', {'name': 'Section 1',
-                                                        'river_id': 1})
+            self.create_resource('section', {'name': 'Section 1',
+                                 'river_id': 1})
             rapid = self.create_resource('rapid', {'name': 'Death Cave',
                                                    'river_id': 1,
                                                    'section_id': 1})
-            print(rapid)
             self.assertEqual(json.loads(rapid.data)['name'], 'Death Cave')
