@@ -27,7 +27,7 @@
 {% for river in rivers %}
   <tr class="info">
     <td><a href="{{ url_for('rivers.river_page', river_id=river.id) }}">{{river.name}}</a></td>
-    <td>Placeholder</td>
+    <td>{{ river.area.name }}</td>
     <td>{{ river.primary_gauge }}</td>
     <td>{{ river.current_data['timestamp'].strftime('%m/%d/%Y %H:%M:%S')}}</td>
     <td>{{ river.current_data['level'] }} feet</td>

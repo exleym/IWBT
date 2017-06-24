@@ -22,6 +22,12 @@ class Area(Base, Model):
     created = Column(DateTime, default=datetime.now)
     updated = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
+    rivers = relationship('River', backref='area', uselist=False,
+                          cascade="all, delete, delete-orphan")
+
+    sections = relationship('Section', backref='area', uselist=False,
+                            cascade="all, delete, delete-orphan")
+
     def __repr__(self):
         return "<Area: %r>" % self.name
 
@@ -75,9 +81,6 @@ class Rapid(Base, Model):
     created = Column(DateTime, default=datetime.now)
     updated = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
-    river = relationship('River', backref='rapids', uselist=False)
-    section = relationship('Section', backref='rapids', uselist=False)
-
     def __repr__(self):
         return "<Rapid: %r on %r>" % (self.name, self.river.name)
 
@@ -90,7 +93,10 @@ class River(Base, Model):
     created = Column(DateTime, default=datetime.now)
     updated = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
-    area = relationship('Area', backref='rivers', uselist=False)
+    rapids = relationship('Rapid', backref='river', uselist=False,
+                          cascade="all, delete, delete-orphan")
+    sections = relationship('Section', backref='river', uselist=False,
+                            cascade="all, delete, delete-orphan")
 
     @property
     def primary_gauge(self):
@@ -133,9 +139,9 @@ class Section(Base, Model):
     created = Column(DateTime, default=datetime.now)
     updated = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
-    area = relationship('Area', backref='sections', uselist=False)
+    rapids = relationship('Rapid', backref='section', uselist=False,
+                          cascade="all, delete, delete-orphan")
     gauge = relationship('Gauge', backref='sections', uselist=False)
-    river = relationship('River', backref='sections', uselist=False)
 
     def __repr__(self):
         return "<Section: %r %r>" % (self.river.name, self.name)
