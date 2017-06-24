@@ -39,12 +39,12 @@ def create_rapid():
     name = request.json['name']
     river_id = request.json['river_id']
     session = get_session(current_app)
-    section = Section(**request.json)
-    session.add(section)
+    rapid = Rapid(**request.json)
+    session.add(rapid)
     try:
         session.commit()
     except:
         return error_out(DatabaseIntegrityError())
-    section = session.query(Section).filter(Section.name == name) \
-                                    .filter(River.id == river_id).first()
-    return jsonify(section.shallow_json), 200
+    rapid = session.query(Rapid).filter(Rapid.name == name) \
+                                .filter(River.id == river_id).first()
+    return jsonify(rapid.shallow_json), 200

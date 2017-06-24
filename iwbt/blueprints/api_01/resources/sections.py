@@ -46,3 +46,12 @@ def create_section():
     section = session.query(Section).filter(Section.name == name) \
                                     .filter(River.id == river_id).first()
     return jsonify(section.shallow_json), 200
+
+
+@api_01.route('/sections/', methods=['GET'])
+def read_sections():
+    """ GET /api/sections returns shallow json of Sections
+    """
+    session = get_session(current_app)
+    sections = session.query(Section).all()
+    return jsonify([section.shallow_json for section in sections]), 200

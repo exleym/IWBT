@@ -111,6 +111,7 @@ from . resources.areas import (create_area, read_area_by_id, read_areas,
 from . resources.flow import (create_gauge_data, check_flow_by_river_id)
 from . resources.gauges import (create_gauge, read_gauge_by_id, read_gauges,
                                 update_gauge, delete_gauge)
+from . resources.rapids import (create_rapid)
 from . resources.rivers import (create_river, read_river_by_id,
                                 read_river_by_name, read_rivers, update_river,
                                 delete_river)
