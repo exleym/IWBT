@@ -22,11 +22,8 @@ class Area(Base, Model):
     created = Column(DateTime, default=datetime.now)
     updated = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
-    rivers = relationship('River', backref='area', uselist=False,
-                          cascade="all, delete, delete-orphan")
-
-    sections = relationship('Section', backref='area', uselist=False,
-                            cascade="all, delete, delete-orphan")
+    rivers = relationship('River', backref='area', cascade="all, delete, delete-orphan")
+    sections = relationship('Section', backref='area', cascade="all, delete, delete-orphan")
 
     def __repr__(self):
         return "<Area: %r>" % self.name
@@ -93,10 +90,8 @@ class River(Base, Model):
     created = Column(DateTime, default=datetime.now)
     updated = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
-    rapids = relationship('Rapid', backref='river', uselist=False,
-                          cascade="all, delete, delete-orphan")
-    sections = relationship('Section', backref='river', uselist=False,
-                            cascade="all, delete, delete-orphan")
+    rapids = relationship('Rapid', backref='river', cascade="all, delete, delete-orphan")
+    sections = relationship('Section', backref='river', cascade="all, delete, delete-orphan")
 
     @property
     def primary_gauge(self):
@@ -141,8 +136,7 @@ class Section(Base, Model):
     created = Column(DateTime, default=datetime.now)
     updated = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
-    rapids = relationship('Rapid', backref='section', uselist=False,
-                          cascade="all, delete, delete-orphan")
+    rapids = relationship('Rapid', backref='section', cascade="all, delete, delete-orphan")
     gauge = relationship('Gauge', backref='sections', uselist=False)
 
     def __repr__(self):

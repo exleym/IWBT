@@ -26,6 +26,19 @@
       {% endfor %}
     </ul>
     {% endif %}
+
+    {% if river.sections %}
+    {% for section in river.sections %}
+    <h3>{{ section.name }}</h3>
+      {% if section.rapids %}
+      <ul>
+        {% for rapid in section.rapids %}
+          <li>{{ rapid.name }} ({{ rapid.rating }})</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    {% endfor %}
+    {% endif %}
   </div>
 {% else %}
   <h2>There doesn't appear to be a river here ... <span onclick="addRiver()">Add One!</span></h2>

@@ -1,5 +1,7 @@
-from iwbt import get_session
-from iwbt.models.rivers import Area, Gauge, GaugeData, River, Rapid, Section
+from iwbt import get_db, get_session
+from iwbt.models.rivers import (Area, Gauge, GaugeData, River,
+                                Rapid, Section,
+                                associate_user_favorites)
 import random
 
 
@@ -8,10 +10,18 @@ class Busboy(object):
     def __init__(self, app):
         self.app = app
         self.MODELS = [GaugeData, Rapid, Gauge, Section, River, Area]
+        self.TABLES = [associate_user_favorites]
 
     def run(self):
+        for table in self.TABLES:
+            self._clear_core_table(table)
+
         for model in self.MODELS:
             self._clear_table(model)
+
+    def _clear_core_table(self, table):
+        con = get_db(self.app)
+        con.execute(table.delete())
 
     def _clear_table(self, model):
         session = get_session(self.app)
