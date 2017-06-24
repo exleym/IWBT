@@ -71,6 +71,15 @@ from flask import Blueprint
 api_01 = Blueprint('api_01', __name__, url_prefix='api/v1.0')
 
 
+def verify(json, required_fields, allowed_fields=None):
+    if not allowed_fields:
+        allowed_fields = []
+    allowed_fields += required_fields
+    passes_required = verify_required_fields(json, required_fields)
+    passes_allowed = verify_allowed_fields(json, allowed_fields)
+    return passes_required * passes_allowed
+
+
 def verify_required_fields(json, expected_fields):
     for field in expected_fields:
         try:

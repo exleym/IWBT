@@ -99,3 +99,16 @@ class TestRiverResourceAPI(unittest.TestCase):
                                                   'name': None})
             error = json.loads(resp.data)
             self.assertEqual(error['ErrorName'], 'DatabaseIntegrityError')
+
+    def test_create_rapids(self):
+        with self.app.test_request_context():
+            self.create_resource('area', {'name': 'Test Area 01'})
+            self.create_resource('river', {'name': 'Test River 01',
+                                           'area_id': 1})
+            section1 = self.create_resource('section', {'name': 'Section 1',
+                                                        'river_id': 1})
+            rapid = self.create_resource('rapid', )
+            river = self.get_resource('river', 1)
+            river = json.loads(river.data)
+            section1 = json.loads(section1.data)
+            self.assertEqual(river['sections'][0]['name'], section1['name'])
