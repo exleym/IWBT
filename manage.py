@@ -38,7 +38,9 @@ def cleardb():
 @manager.command
 def dataspoof():
     """ Populate a development database with sample data """
-    data_spoofer = DataSpoofer(app)
+    rivers = 5
+    rapids = 5
+    data_spoofer = DataSpoofer(app, rivers, rapids)
     data_spoofer.run()
 
 

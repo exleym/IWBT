@@ -22,8 +22,10 @@ class Busboy(object):
 
 
 class DataSpoofer(object):
-    def __init__(self, app):
+    def __init__(self, app, rivers, rapids):
         self.app = app
+        self.rivers = rivers
+        self.rapids = rapids
 
     def run(self):
         self._populate_areas()
@@ -47,14 +49,14 @@ class DataSpoofer(object):
         session = get_session(self.app)
         areas = session.query(Area).all()
         for area in areas:
-            self._create_random_river(area, session)
-            self._create_random_river(area, session)
+            for i in range(self.rivers):
+                self._create_random_river(area, session)
 
     def _populate_sections(self):
         session = get_session(self.app)
         rivers = session.query(River).all()
         for river in rivers:
-            for section in ['Section 1', 'Section 2', 'Lower']:
+            for section in ['Upper', 'Section 1', 'Section 2', 'Lower']:
                 session.add(Section(name=section, area_id=river.area_id, river_id=river.id))
         session.commit()
         session.close()
@@ -63,7 +65,7 @@ class DataSpoofer(object):
         session = get_session(self.app)
         sections = session.query(Section).all()
         for section in sections:
-            for i in range(6):
+            for i in range(self.rivers):
                 self._create_random_rapid(section, session)
 
     def _create_random_rapid(self, section, session=None):
@@ -89,7 +91,12 @@ class DataSpoofer(object):
             'Nucassee', 'Nantahala', 'Kunnesee', 'Keowee', 'Kanuga',
             'Jutaculla', 'Hemptown', 'Euharlee', 'Frogtown', 'Cheeowhee',
             'Ayuhwasee', 'Choquata', 'Conasauga', 'Cullasagee', 'Cullowhee',
-            'Fightingtown', 'Farttown'
+            'Fightingtown', 'Farttown', 'Amicalola', 'Gauley', 'Annewakee',
+            'Apalachee', 'Bear', 'Big', 'Cedar', 'Broad', 'Cartecay',
+            'Clear', 'Dicks', 'Coosawattee', 'Murder', 'Ocmulgee', 'Ogeechee',
+            'Overflow', 'Sweetwater', 'Ausable', 'Hudson', 'Black', 'Catawba',
+            'Green', 'Deep', 'Elk', 'Meadow', 'Pigeon', 'Santeelah', 'Swannanoa',
+            'Watauga', 'Chauga'
         ]
         river = random.choice(random_river_names)
         return "{} {}".format(river, random.choice(['River', 'Creek']))
@@ -108,6 +115,11 @@ class DataSpoofer(object):
             'Razorback', 'Island Rapid', 'Vortex', 'The Clog', 'Power Slide', 'Groove Tube',
             'Toiled Bowl', 'Stairstep', 'Corner Pocket', 'Side Pocket', 'Highway to Heaven',
             'Drunk Tank', 'Arch Nemesis', 'Double Undercut', 'Jailhouse', 'Cyclops',
-            'Cave Falls', 'Jedi Training', 'Headless Horwseman', 'Mortal Kombat', 'Mangler'
+            'Cave Falls', 'Jedi Training', 'Headless Horwseman', 'Mortal Kombat', 'Mangler',
+            'Thunderfuck', 'First Slide', 'Mandatory Portage', 'Thirty Foot Falls', 'Murderdeathkill',
+            'Black Hole', 'Edge of the World', 'Super Soc Em Dog', 'Soc Em Dog', 'Teacups'
+            'Slingshot', 'Klingon Empire', 'Split Decision', 'Boulder Pile', 'Undercut',
+            'Big Undercut', 'Gnar-sieve-death-cave', 'Mill Rapid', 'Powerhouse', 'Hornets Nest',
+            'Geezer Hole', 'FUBAR', 'Cigarette Beach', 'Last Chance', 'Fist', 'El Horrendo'
         ]
         return random.choice(random_rapid_names)
