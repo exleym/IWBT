@@ -37,3 +37,13 @@
   margin: 20px;
   margin-top:70px
 }
+
+.navbar li:active {
+  background-color: #00adee;
+}
+.navbar li:hover {
+  background-color: #00adee;
+}
+.sidebar li.hoverable:hover {
+  background-color: #00adee;
+}

@@ -4,6 +4,7 @@
 {% block css %}
 {{ super() }}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='river_main.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/river.css') }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css">
 {% endblock %}
 
@@ -14,34 +15,62 @@
 
 {% block content %}
 <!--<content framework for a river page -- TODO: need to make this flexible so it works for any river> -->
-<div class="container" id="page_head">
-{% if river %}
-  <h2 id="page_title">{{river.name}}</h2>
-  <h4 id="river_description" style="font-size:2.5vw">Placeholder</h4>
-  <div>
-    {% if river.gauges %}
-    <ul>
-      {% for gauge in river.gauges %}
-        <li>{{ gauge.name }}: {{ gauge.current_level.level }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %}
+<div class="page-container" id="page_head">
+  <div class="page-wrapper">
+    <div class="sidebar collapse in width">
+      <div class="sidebar-content panel-group">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title"><a href="#overview">Overview</a></div>
+            {% if river.sections %}
+              {% for section in river.sections %}
+                <div class="panel-title"><a data-toggle="collapse" href="#collapse{{ section.id }}">{{ section.name }}</a></li>
+                  {% if section.rapids %}
+                    <div id="collapse{{ section.id }}" class="panel-collapse collapse">
+                      <ul class="list-group">
+                        {% for rapid in section.rapids %}
+                          <li class="list-group-item"><a href="#rapid{{ rapid.id }}">{{ rapid.name }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="page-content">
+    {% if river %}
+      <h2 id="page_title">{{river.name}}</h2>
+      <!--<h4 id="river_description" style="font-size:2.5vw">Placeholder</h4>-->
+      <div>
+        {% if river.gauges %}
+        <ul>
+          {% for gauge in river.gauges %}
+            <li>{{ gauge.name }}: {{ gauge.current_level.level }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
 
-    {% if river.sections %}
-    {% for section in river.sections %}
-    <h3>{{ section.name }}</h3>
-      {% if section.rapids %}
-      <ul>
-        {% for rapid in section.rapids %}
-          <li>{{ rapid.name }} ({{ rapid.rating }})</li>
+        {% if river.sections %}
+        {% for section in river.sections %}
+        <h3>{{ section.name }}</h3>
+          {% if section.rapids %}
+          <ul class="rapid-list">
+            {% for rapid in section.rapids %}
+              <li><span class="rating">{{ rapid.rating }}</span><span class="rapid-name"><a href="#">{{ rapid.name }}</a></span></li>
+            {% endfor %}
+          </ul>
+          {% endif %}
         {% endfor %}
-      </ul>
-      {% endif %}
-    {% endfor %}
+        {% endif %}
+      </div>
+    {% else %}
+      <h2>There doesn't appear to be a river here ... <span onclick="addRiver()">Add One!</span></h2>
     {% endif %}
+    </div>
   </div>
-{% else %}
-  <h2>There doesn't appear to be a river here ... <span onclick="addRiver()">Add One!</span></h2>
-{% endif %}
 </div>
 {% endblock %}

@@ -125,7 +125,7 @@ class DataSpoofer(object):
             'Razorback', 'Island Rapid', 'Vortex', 'The Clog', 'Power Slide', 'Groove Tube',
             'Toiled Bowl', 'Stairstep', 'Corner Pocket', 'Side Pocket', 'Highway to Heaven',
             'Drunk Tank', 'Arch Nemesis', 'Double Undercut', 'Jailhouse', 'Cyclops',
-            'Cave Falls', 'Jedi Training', 'Headless Horwseman', 'Mortal Kombat', 'Mangler',
+            'Cave Falls', 'Jedi Training', 'Headless Horseman', 'Mortal Kombat', 'Mangler',
             'Thunderfuck', 'First Slide', 'Mandatory Portage', 'Thirty Foot Falls', 'Murderdeathkill',
             'Black Hole', 'Edge of the World', 'Super Soc Em Dog', 'Soc Em Dog', 'Teacups'
             'Slingshot', 'Klingon Empire', 'Split Decision', 'Boulder Pile', 'Undercut',
